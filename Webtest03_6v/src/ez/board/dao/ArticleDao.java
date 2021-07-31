@@ -23,6 +23,7 @@ public class ArticleDao {
 	private ArticleDao() {
 	}
 
+	//글 갯수 리턴
 	public int selectCount(Connection conn) throws SQLException {
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -65,7 +66,8 @@ public class ArticleDao {
 			JdbcUtil.close(pstmt);
 		}
 	}
-//PDF에서 161페이지
+	//PDF에서 161페이지
+	//쿼리문 결과로부터 글 만들기(셋팅하기)
 	private Article makeArticleFromResultSet(ResultSet rs, boolean readContent)
 			throws SQLException {
 		Article article = new Article();
@@ -81,7 +83,7 @@ public class ArticleDao {
 			article.setContent(rs.getString("content"));
 		}
 		return article;
-	}
+	}//여기까지 list.jsp를 위한 기본 로직들
 
 	public int insert(Connection conn, Article article) throws SQLException {
 		PreparedStatement pstmt = null;

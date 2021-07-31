@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-
+<!--list.jsp 13행
+request.setAttribute("listModel", articlelistModel); -->
+<%--둘의 차이점은 html 소스 보기에서 확인할 수 있다.
+html문서에서 소스보기를 할때 
+<!-- -->는 주석이 소스코드로 보이게 된다.
+하지만 <%-- --%><%--는 소스보기에도 보이지 않는다. 
+--%>
 <html>
 <head>
 <meta charset="EUC-KR">
@@ -13,8 +18,8 @@
 <c:if test="${listModel.totalPageCount > 0}">
 <tr>
 	<td colspan="5">
-	${listModel.startRow}-${listModel.endRow}
-	[${listModel.requestPage}/${listModel.totalPageCount}]
+	${listModel.startRow}~${listModel.endRow}&nbsp;&nbsp;&nbsp;
+	[${listModel.requestPage}&nbsp;/&nbsp;${listModel.totalPageCount}]
 	</td>
 </tr></c:if>
 <tr>
@@ -25,7 +30,7 @@
 <td>조회수</td>
 </tr>
 <c:choose>
-<c:when test="${listModel.hasArticle==false}">
+<c:when test="${listModel.hasArticle==false}"><%--게시글이 없는경우 --%>
 <tr>
 <td colspan="5">
 게시글이 없습니다.

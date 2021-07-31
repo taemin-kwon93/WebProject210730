@@ -18,8 +18,10 @@ public class ListArticleService {
 	
 	public static final int COUNT_PER_PAGE=10;
 	
+	//글 목록을 불러오는 메소드
 	public ArticleListModel getArticleList(int requestPageNumber) {
-		if(requestPageNumber < 0) {
+		if(requestPageNumber < 0) {/*model패키지, 
+		ArticleListModel 타입으로 리턴을 받는다.*/
 			throw new IllegalArgumentException("page number < 0: " + requestPageNumber);
 		}
 		ArticleDao articleDao = ArticleDao.getInstance();
@@ -52,14 +54,17 @@ public class ListArticleService {
 		}
 	}//getArticleList
 	
+	//페이지 수가 총 몇인지 계산하는 메소드
 	private int calculateTotalPageCount(int totalArticleCount) {
-		if(totalArticleCount==0) {
+		if(totalArticleCount==0) {//게시글이 없으면, 0을 리턴한다.
 			return 0;
 		}
 		int pageCount = totalArticleCount/COUNT_PER_PAGE;
 		if(totalArticleCount%COUNT_PER_PAGE > 0) {
 			pageCount++;
 		}
-		return pageCount;
+		return pageCount;/*한페이지당 게시글 10개를 설정했을때(COUNT_PER_PAGE,
+		불러온 전체 글 수(totalArticleCount)를 10으로 
+		나눈다. 연산된 결과 리턴*/
 	}
 }
