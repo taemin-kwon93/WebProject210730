@@ -20,15 +20,15 @@ public class WriteArticleService {
 	
 	public Article write(WritingRequest writingRequest)throws IdGenerationFailedException{
 		//글 입력을 위한 셋팅
-		int groupId = IdGenerator.getInstance().generateNextId("article");/*DB에서 sequence_name컬럼 내용 'article'
+		int groupId = IdGenerator.getInstance().generateNextId("article");/*DB에서 sequence_name컬럼 'article'의 값
 		따라서 IdGenerator를 통해 그룹번호를 가지고온 다음 int타입 groupId에 저장한다.*/
 		Article article = writingRequest.toArticle();/*toArticle()에는 작성자, 비밀번호, 제목, 내용의 데이터가 담겨져있다.*/
 		
 		article.setGroupId(groupId);//그룹번호를 지정해준다.
 		article.setPostingDate(new Date());//포스팅 날짜를 정해준다.
 		DecimalFormat decimalFormat = new DecimalFormat("0000000000");//DecimalFormat의 형태를 0으로 10자리 주고
-		article.setSequenceNumber(decimalFormat.format(groupId)+"999999");//그룹번호 999999를 더해서 총 16자리 숫자가 sequenceNumber가 된다. 
-		
+		article.setSequenceNumber(decimalFormat.format(groupId)+"999999");/* 그룹번호로 저장한 groupId의 값을 "0000000000"형식으로 맞추어
+		'0000000026'와 같이 그룹번호를 지정하고 댓글 분류를 위한 "999999"를 결합한다. 총 16자리 숫자가 sequenceNumber(0000000026999999)가 된다. */
 		Connection conn = null;
 		try {
 			conn = ConnectionProvider.getConnection();

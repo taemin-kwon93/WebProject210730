@@ -45,7 +45,7 @@ public class ReplyArticleService {
 					throw(LastChildAleadyExistsException)e;
 				}
 			}
-			String searchMaxSeqNum = parent.getSequenceNumber();//0000000001999999 아런식으로 시퀀스 넘버 가지고옴
+			String searchMaxSeqNum = parent.getSequenceNumber();//0000000026999999 아런식으로 시퀀스 넘버 가지고옴
 			String searchMinSeqNum = getSearchMinSeqNum(parent);
 			
 			String lastChildSeq = articleDao.selectLastSequenceNumber(conn, searchMaxSeqNum, searchMinSeqNum);
