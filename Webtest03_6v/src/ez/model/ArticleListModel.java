@@ -10,7 +10,7 @@ public class ArticleListModel {
 	private int startRow;
 	private int endRow;
 	
-	public ArticleListModel() {
+	public ArticleListModel() {//글이 아무것도 없을때.
 		this(new ArrayList<Article>(), 0, 0, 0, 0);
 	}
 	

@@ -49,8 +49,10 @@ public class ArticleDao {
 					+ "    ) where rownum <= ? "
 					+ ") where rnum >= ?");//46~50행의 쿼리문을 
 			/*
-			 * select * from article m order by m.sequence_no desc; 
-			 * */
+			 * select * from article m order by m.sequence_no desc; 시퀀스번호(그룹번호+댓글분류번호, 16자리의 숫자)를 내림차순으로 정리한다.
+			 * 즉, 큰 값부터 작은 값으로 쭉 나열하기때문에 최근 입력된 글이 먼저 나타난다.
+			 * 다음 쿼리문의 핵심, select rownum rnum과 where rownum <= ? 이다. endRow를 기준으로 30개의 article내용을 갖고온다.
+			 * 쿼리문에서 endRow=30,firstRow=21 이라면 (8월1일 20:47기준의 예시) 3페이지의 글들을 골라온다. */
 			
 			
 			pstmt.setInt(1, endRow);//쿼리문에 담길 내용 1
@@ -62,7 +64,7 @@ public class ArticleDao {
 			List<Article> articleList = new ArrayList<Article>();
 			do {
 				Article article = makeArticleFromResultSet(rs, false);
-				articleList.add(article);
+				articleList.add(article);//반복해서 article들을 articleList에 담는다.
 				//System.out.println(article);
 			} while (rs.next());
 			return articleList;
@@ -147,12 +149,13 @@ public class ArticleDao {
 		}
 	}
 
+	//조회수를 올리기위한 메소드
 	public void increaseReadCount(Connection conn, int articleId)
 			throws SQLException {
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement("update article set read_count = read_count + 1 where article_id = ?");
-			pstmt.setInt(1, articleId);
+			pstmt.setInt(1, articleId);//이 쿼리문의 핵심 -> 해당되는 글번호의 read_count값에 1을 더해준다.
 			pstmt.executeUpdate();
 		} finally {
 			JdbcUtil.close(pstmt);

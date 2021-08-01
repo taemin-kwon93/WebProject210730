@@ -36,16 +36,16 @@ public class ListArticleService {
 			
 			int totalPageCount = calculateTotalPageCount(totalArticleCount);
 			
-			int firstRow = (requestPageNumber -1)*COUNT_PER_PAGE +1;/*
-			페이지 넘버가 2일떄, */
-			int endRow = firstRow + COUNT_PER_PAGE -1;
+			int firstRow = (requestPageNumber -1)*COUNT_PER_PAGE +1;
+			/*페이지 넘버가 2일때 계산 예시. (2-1)*10(상수count_per_page)+1 =11, 따라서 2페이지의 첫번째 행은 11  */
+			int endRow = firstRow + COUNT_PER_PAGE -1;//위 주석에 따른 예시. 11+10-1 = 20, 따라서 마지막 행은 20
 			
-			if(endRow > totalArticleCount) {
+			if(endRow > totalArticleCount) {//글의 수 보다 계산된 endRow의 수가 클때, 마지막 번째의 글 수(예, 34번째)를 지정한다.
 				endRow = totalArticleCount;
 			}
 			
 			List<Article> articleList = articleDao.select(conn, firstRow, endRow);
-			
+			//<Article>타입의 List 'articleList'선언, 내용에는 articleDao.select메소드의 결과가 들어간다.
 			ArticleListModel articleListView = new ArticleListModel(articleList, requestPageNumber, totalPageCount, firstRow, endRow);
 			return articleListView;
 		}catch(SQLException e){

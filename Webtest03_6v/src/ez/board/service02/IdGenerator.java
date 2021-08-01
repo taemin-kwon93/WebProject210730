@@ -25,9 +25,9 @@ public class IdGenerator {
 		PreparedStatement pstmtUpdate = null;
 		
 		try {
-			conn = ConnectionProvider.getConnection();
-			conn.setAutoCommit(false);
-			pstmtSelect = conn.prepareStatement(
+			conn = ConnectionProvider.getConnection();//DB연동
+			conn.setAutoCommit(false);//트랜잭션 시작점
+			pstmtSelect = conn.prepareStatement(//쿼리문 준비
 					"select next_value from id_sequence " +
 					" where sequence_name = ? for update ");
 			pstmtSelect.setString(1, sequenceName);
@@ -36,15 +36,16 @@ public class IdGenerator {
 			rs = pstmtSelect.executeQuery();
 			rs.next();
 			int id = rs.getInt(1);//따라서 id에 getInt(1)값 26을 저장
+			//System.out.println("rs결과의 글번호" + id);26
 			id++;//글번호 증가
-			
+			//System.out.println("증가된 글번호" + id);27
 			pstmtUpdate = conn.prepareStatement(
 					" update id_sequence set next_value = ? "+
-					" where sequence_name = ?");//글번호 증가를 위한 쿼리문
+					" where sequence_name = ?");//글번호 수정을 위한 쿼리문
 			pstmtUpdate.setInt(1, id);
 			pstmtUpdate.setString(2, sequenceName);
 			pstmtUpdate.executeUpdate();
-			
+			//System.out.println("쿼리문에 담길 글번호" + id);27
 			conn.commit();
 			return id;
 			}catch(SQLException ex) {
