@@ -123,6 +123,7 @@ public class ArticleDao {
 		}
 	}
 
+	//ReadArticleService에서 사용하는 메소드
 	public Article selectById(Connection conn, int articleId)
 			throws SQLException {
 		PreparedStatement pstmt = null;
@@ -132,11 +133,13 @@ public class ArticleDao {
 			pstmt.setInt(1, articleId);
 			/*	예시, select * from article where article_id = 42 의 결과
 			  42	22	0000000022989898	21/07/30	1	세번째	1	re: 세번째	세번째 */
-			rs = pstmt.executeQuery();
-			if (!rs.next()) {
-				return null;
+			rs = pstmt.executeQuery();//쿼리문 결과로 나온 정보를 rs에 담는다.
+			if (!rs.next()) {//articleId 값으로 쿼리문 실행한 결과가 없으면, 즉 글이 없으면
+				return null;//null값을 리턴한다.
 			}
-			Article article = makeArticleFromResultSet(rs, true);
+			Article article = makeArticleFromResultSet(rs, true);//글이 있을 경우,
+			//article.setId(rs.getInt("article_id")); 이런식으로 article에 글을 담아옴.
+			//private Article makeArticleFromResultSet(ResultSet rs, boolean readContent), return article;
 			return article;
 		} finally {
 			JdbcUtil.close(rs);

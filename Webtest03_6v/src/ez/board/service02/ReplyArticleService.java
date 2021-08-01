@@ -26,7 +26,7 @@ public class ReplyArticleService {
 		CannotReplyArticleException,LastChildAleadyExistsException{
 		Connection conn = null;
 		
-		Article article = replyingRequest.toArticle();
+		Article article = replyingRequest.toArticle();//ReplyingRequest는 WritingRequest로 부터 상속받는다.
 		try {
 			conn = ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);

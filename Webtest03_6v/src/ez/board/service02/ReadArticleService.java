@@ -26,7 +26,7 @@ public class ReadArticleService {
 		try {
 			conn = ConnectionProvider.getConnection();
 			ArticleDao articleDao = ArticleDao.getInstance();
-			Article article = articleDao.selectById(conn, articleId);
+			Article article = articleDao.selectById(conn, articleId);//
 			if(article == null) {
 				throw new ArticleNotFoundException(
 						"게시글이 존재하지 않습니다.: " + articleId);
