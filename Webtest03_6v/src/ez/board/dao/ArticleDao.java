@@ -130,6 +130,8 @@ public class ArticleDao {
 		try {
 			pstmt = conn.prepareStatement("select * from article where article_id = ?");
 			pstmt.setInt(1, articleId);
+			/*	예시, select * from article where article_id = 42 의 결과
+			  42	22	0000000022989898	21/07/30	1	세번째	1	re: 세번째	세번째 */
 			rs = pstmt.executeQuery();
 			if (!rs.next()) {
 				return null;
