@@ -47,11 +47,15 @@ public class ArticleDao {
 					+ "    select rownum rnum, article_id, group_id, sequence_no, posting_date, read_count, writer_name, password, title from ( "
 					+ "        select * from article m order by m.sequence_no desc "
 					+ "    ) where rownum <= ? "
-					+ ") where rnum >= ?");
+					+ ") where rnum >= ?");//46~50행의 쿼리문을 
+			/*
+			 * select * from article m order by m.sequence_no desc; 
+			 * */
 			
-			pstmt.setInt(1, endRow);
-			pstmt.setInt(2, firstRow);
-			rs = pstmt.executeQuery();
+			
+			pstmt.setInt(1, endRow);//쿼리문에 담길 내용 1
+			pstmt.setInt(2, firstRow);//쿼리문에 담길 내용 2
+			rs = pstmt.executeQuery();//쿼리문의 결과를 담는다.
 			if (!rs.next()) {
 				return Collections.emptyList();
 			}
@@ -59,6 +63,7 @@ public class ArticleDao {
 			do {
 				Article article = makeArticleFromResultSet(rs, false);
 				articleList.add(article);
+				//System.out.println(article);
 			} while (rs.next());
 			return articleList;
 		} finally {
@@ -90,10 +95,10 @@ public class ArticleDao {
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
-			pstmt = conn.prepareStatement("insert into article "
+			pstmt = conn.prepareStatement("insert into article "//article 테이블에 삽입한다.
 					+ "(article_id, group_id, sequence_no, posting_date, read_count, "
-					+ "writer_name, password, title, content) "
-					+ "values (article_id_seq.NEXTVAL, ?, ?, ?, 0, ?, ?, ?, ?)");
+					+ "writer_name, password, title, content) "//해당되는 컬럼들에,
+					+ "values (article_id_seq.NEXTVAL, ?, ?, ?, 0, ?, ?, ?, ?)");//괄호 안 값을 넣는다.
 			pstmt.setInt(1, article.getGroupId());
 			pstmt.setString(2, article.getSequenceNumber());
 			pstmt.setTimestamp(3, new Timestamp(article.getPostingDate().getTime()));
@@ -101,16 +106,16 @@ public class ArticleDao {
 			pstmt.setString(5, article.getPassword());
 			pstmt.setString(6, article.getTitle());
 			pstmt.setString(7, article.getContent());
-			int insertedCount = pstmt.executeUpdate();
+			int insertedCount = pstmt.executeUpdate();//입력이 되면 1이 리턴된다.(등록된 글 수)
 
-			if (insertedCount > 0) {
-				stmt = conn.createStatement();
-				rs = stmt.executeQuery("select article_id_seq.CURRVAL from dual");
+			if (insertedCount > 0) {//pstmt.executeUpdate()가 실행되어 1이 입력이 되면,
+				stmt = conn.createStatement();//아래에 쿼리문을 실행한다.
+				rs = stmt.executeQuery("select article_id_seq.CURRVAL from dual");//방금 입력한 글의 시퀀스 값을 가지고 와라.
 				if (rs.next()) {
-					return rs.getInt(1);
+					return rs.getInt(1);//삽입된 내용의 시퀀스 값이 있으면, 그 값을 리턴하고
 				}
 			}
-			return -1;
+			return -1;//위 내용이 제대로 되지 않았다면, -1을 리턴한다.
 		} finally {
 			JdbcUtil.close(rs);
 			JdbcUtil.close(stmt);
@@ -169,7 +174,7 @@ public class ArticleDao {
 			JdbcUtil.close(rs);
 			JdbcUtil.close(pstmt);
 		}
-	}
+	}//복습할 범위
 
 	public int update(Connection conn, Article article) throws SQLException {
 		PreparedStatement pstmt = null;

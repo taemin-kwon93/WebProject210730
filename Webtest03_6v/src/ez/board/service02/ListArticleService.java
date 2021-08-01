@@ -19,16 +19,16 @@ public class ListArticleService {
 	public static final int COUNT_PER_PAGE=10;
 	
 	//글 목록을 불러오는 메소드
-	public ArticleListModel getArticleList(int requestPageNumber) {
+	public ArticleListModel getArticleList(int requestPageNumber) {//int타입 페이지 숫자를 매개변수로 받는다.
 		if(requestPageNumber < 0) {/*model패키지, 
-		ArticleListModel 타입으로 리턴을 받는다.*/
-			throw new IllegalArgumentException("page number < 0: " + requestPageNumber);
+		ArticleListModel 타입으로 값을 받는다.*/
+			throw new IllegalArgumentException("page number < 0: " + requestPageNumber);//페이지 넘버가 0보다 작을때의 예외처리
 		}
-		ArticleDao articleDao = ArticleDao.getInstance();
+		ArticleDao articleDao = ArticleDao.getInstance();//articleDao 
 		Connection conn = null;
 		try {
 			conn = ConnectionProvider.getConnection();
-			int totalArticleCount = articleDao.selectCount(conn);
+			int totalArticleCount = articleDao.selectCount(conn);//글의 개수를 갖고와서 totalArticleCount에 저장한다.ㄴ
 			
 			if(totalArticleCount == 0) {
 				return new ArticleListModel();
@@ -36,7 +36,8 @@ public class ListArticleService {
 			
 			int totalPageCount = calculateTotalPageCount(totalArticleCount);
 			
-			int firstRow = (requestPageNumber -1)*COUNT_PER_PAGE +1;
+			int firstRow = (requestPageNumber -1)*COUNT_PER_PAGE +1;/*
+			페이지 넘버가 2일떄, */
 			int endRow = firstRow + COUNT_PER_PAGE -1;
 			
 			if(endRow > totalArticleCount) {
