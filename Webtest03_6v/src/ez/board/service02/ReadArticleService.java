@@ -18,7 +18,7 @@ public class ReadArticleService {
 	private ReadArticleService() {}
 	
 	public Article readArticle(int articleId) throws ArticleNotFoundException{
-		return selectArticle(articleId, true);
+		return selectArticle(articleId, true);//글을 읽을 때는 boolean increaseCount에 true를 줘서 조회수를 올린다.
 	}
 
 	private Article selectArticle(int articleId, boolean increaseCount)throws ArticleNotFoundException{
@@ -26,16 +26,18 @@ public class ReadArticleService {
 		try {
 			conn = ConnectionProvider.getConnection();
 			ArticleDao articleDao = ArticleDao.getInstance();
-			Article article = articleDao.selectById(conn, articleId);
-			if(article == null) {
+			Article article = articleDao.selectById(conn, articleId);//매개변수로 받아온 articleId로 selectById메소드를 실행하고
+			//메소드의 결과로 받아온 article을 저장한다.
+			
+			if(article == null) {//article이 널이라면, 해당 아이디로 등록된 글은 없다.
 				throw new ArticleNotFoundException(
 						"게시글이 존재하지 않습니다.: " + articleId);
 			}
-			if(increaseCount) {
+			if(increaseCount) {//조회수를 올린다.
 				articleDao.increaseReadCount(conn, articleId);
 				article.setReadCount(article.getReadCount() +1 );
 			}
-			return article;
+			return article;//int articleId 맞춰 골라온 글을 리턴한다.
 		}catch(SQLException e) {
 			throw new RuntimeException("DB 에러 발생: " + e.getMessage(), e);
 		}finally {
@@ -44,6 +46,6 @@ public class ReadArticleService {
 	}//private Article selectArticle(int articleId, boolean increaseCount)
 	
 	public Article getArticle(int articleId) throws ArticleNotFoundException{
-		return selectArticle(articleId, false);
+		return selectArticle(articleId, false);//getArticle을 사용할때는 boolean increaseCount에 false를 줘서 조회수를 올리지 않는다.
 	}
 }

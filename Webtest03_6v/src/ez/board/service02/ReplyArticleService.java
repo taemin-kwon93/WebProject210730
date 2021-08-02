@@ -29,13 +29,16 @@ public class ReplyArticleService {
 		Article article = replyingRequest.toArticle();//ReplyingRequest는 WritingRequest로 부터 상속받는다.
 		try {
 			conn = ConnectionProvider.getConnection();
-			conn.setAutoCommit(false);
+			conn.setAutoCommit(false);//트랜잭션 시작점
 			
 			ArticleDao articleDao = ArticleDao.getInstance();
-			Article parent = articleDao.selectById(conn, replyingRequest.getParentArticleId());//부모글 저장
+			Article parent = articleDao.selectById(conn, replyingRequest.getParentArticleId());
+			/* ReplyingRequest는 WritingRequest를 상속받는다.
+			 * ReplyingRequest로 부터 받아온 int값으로 selectById메소드를 실행한다.
+			 * 실행된 결과로 갖고온 article을 parent에 저장한다.*/
 			try {
 				checkParent(parent, replyingRequest.getParentArticleId());
-			}catch(Exception e) {
+			}catch(Exception e) {//예외처리
 				JdbcUtil.rollback(conn);
 				if(e instanceof ArticleNotFoundException) {
 					throw(ArticleNotFoundException)e;

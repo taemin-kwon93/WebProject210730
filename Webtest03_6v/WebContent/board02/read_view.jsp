@@ -8,6 +8,9 @@
 	response.addHeader("Cache-Control", "no-store");
 	response.setDateHeader("Expires", 1L);
 %>
+<%--read.jsp에 담겨있는 내용 = 
+Article article = ReadArticleService.getInstance().readArticle(articleId);
+request.setAttribute("article", article); --%>
 <html>
 <head>
 <meta charset="EUC-KR">

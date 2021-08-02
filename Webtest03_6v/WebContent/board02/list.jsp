@@ -4,7 +4,7 @@
 <%@ page import="ez.board.service02.ListArticleService" %>
 <%
 	String pageNumberString = request.getParameter("p");
-	int pageNumber=1;
+	int pageNumber=1;//기본 페이지 설정, 게시판을 열면 1페이지가 열린다.
 	if(pageNumberString != null && pageNumberString.length() > 0){
 		pageNumber = Integer.parseInt(pageNumberString);
 	}

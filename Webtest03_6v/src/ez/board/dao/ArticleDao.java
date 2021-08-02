@@ -160,7 +160,7 @@ public class ArticleDao {
 		} finally {
 			JdbcUtil.close(pstmt);
 		}
-	}
+	}//public void increaseReadCount
 
 	public String selectLastSequenceNumber(Connection conn,
 			String searchMaxSeqNum, String searchMinSeqNum) 
