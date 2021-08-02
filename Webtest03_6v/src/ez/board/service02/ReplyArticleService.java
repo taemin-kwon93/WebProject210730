@@ -23,7 +23,7 @@ public class ReplyArticleService {
 	//CannotReplyArticleException 답변이 없을때,
 	//LastChildAleadyExistsException 답변에 답변에 답변 뭐시기 뭐시기
 	public Article reply(ReplyingRequest replyingRequest)throws ArticleNotFoundException, 
-		CannotReplyArticleException,LastChildAleadyExistsException{//댓글입력의 예외경우 글이없는경우, 댓글을 달 수 없는 경우, 마지막 댓글이 이미 있는 경우.
+		CannotReplyArticleException,LastChildAleadyExistsException{//댓글입력의 예외경우 1. 글이없는경우, 2. 댓글을 달 수 없는 경우, 3. 마지막 댓글이 이미 있는 경우.
 		Connection conn = null;
 		
 		Article article = replyingRequest.toArticle();//ReplyingRequest는 WritingRequest로 부터 상속받는다.
