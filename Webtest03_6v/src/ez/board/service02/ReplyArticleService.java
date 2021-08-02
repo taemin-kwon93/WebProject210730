@@ -23,7 +23,7 @@ public class ReplyArticleService {
 	//CannotReplyArticleException 답변이 없을때,
 	//LastChildAleadyExistsException 답변에 답변에 답변 뭐시기 뭐시기
 	public Article reply(ReplyingRequest replyingRequest)throws ArticleNotFoundException, 
-		CannotReplyArticleException,LastChildAleadyExistsException{
+		CannotReplyArticleException,LastChildAleadyExistsException{//댓글입력의 예외경우 글이없는경우, 댓글을 달 수 없는 경우, 마지막 댓글이 이미 있는 경우.
 		Connection conn = null;
 		
 		Article article = replyingRequest.toArticle();//ReplyingRequest는 WritingRequest로 부터 상속받는다.
@@ -32,7 +32,7 @@ public class ReplyArticleService {
 			conn.setAutoCommit(false);
 			
 			ArticleDao articleDao = ArticleDao.getInstance();
-			Article parent = articleDao.selectById(conn, replyingRequest.getParentArticleId());
+			Article parent = articleDao.selectById(conn, replyingRequest.getParentArticleId());//부모글 저장
 			try {
 				checkParent(parent, replyingRequest.getParentArticleId());
 			}catch(Exception e) {
@@ -89,21 +89,23 @@ public class ReplyArticleService {
 	}//private void checkParent(Article parent, int parentId)
 	
 	private String getSearchMinSeqNum(Article parent){
-		String parentSeqNum = parent.getSequenceNumber();
-		DecimalFormat decimalFormat = new DecimalFormat("0000000000000000");
-		long parentSeqLongValue = Long.parseLong(parentSeqNum);
+		String parentSeqNum = parent.getSequenceNumber();//시퀀스넘버는 String형 16글자이다. parent의 시퀀스 번호를 같은 타입의 변수 parentSeqNum에 저장한다.
+		DecimalFormat decimalFormat = new DecimalFormat("0000000000000000");//0으로 채워진 16자리의 숫자 형태
+		long parentSeqLongValue = Long.parseLong(parentSeqNum);//String타입을 Long으로 변환하고 그 값을 parentSeqLongValue에 넣는다.
+		/*시퀀스 번호 확인*/System.out.println("test1_parentSeqNum: "+ parentSeqLongValue);
 		long searchMinLongValue = 0;
 		switch (parent.getLevel()) {
-		case 0:
+		case 0://본문글일때, 글의 레벨은 0
 			searchMinLongValue = parentSeqLongValue/1000000L * 1000000L;
 			break;
-		case 1:
+		case 1://본문글의 댓글일때 레벨은 1
 			searchMinLongValue = parentSeqLongValue/10000L*10000L;
 			break;
 		case 2:
 			searchMinLongValue = parentSeqLongValue / 100L * 100L;
 			break;
 		}
+		System.out.println("test2_searchMinLongValue: " + searchMinLongValue);
 		return decimalFormat.format(searchMinLongValue);
 	}//getSearchMinSeqNum 이거 처리할때 system.out.println 으로 내용 찍어보자.
 	
