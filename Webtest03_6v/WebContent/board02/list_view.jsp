@@ -45,8 +45,9 @@ html문서에서 소스보기를 할때
 <c:if test="${article.level > 0}">
 <c:forEach begin="1" end="${article.level}">-</c:forEach>&gt;
 </c:if>
-<c:set var="query" value="articleId=${article.id}&p=${listModel.requestPage}"/>
-<a href="<c:url value="read.jsp?${query}"/>">${article.title}</a></td>
+<c:set var="query" value="articleId=${article.id}&p=${listModel.requestPage}"/><!-- 뷰에서 중요한 코드,
+query라는 변수를 선언하고 'articleId=${article.id}&p=${listModel.requestPage}'라는 내용을 담는다. -->
+<a href="<c:url value="read.jsp?${query}"/>">${article.title}</a></td><!-- 글제목을 입력하면 a 태그를 이용해서 이동한다. -->
 <td>${article.writerName}</td>
 <td>${article.postingDate}</td>
 <td>${article.readCount}</td>

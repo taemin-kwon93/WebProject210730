@@ -28,7 +28,7 @@ public class ListArticleService {
 		Connection conn = null;
 		try {
 			conn = ConnectionProvider.getConnection();
-			int totalArticleCount = articleDao.selectCount(conn);//글의 개수를 갖고와서 totalArticleCount에 저장한다.ㄴ
+			int totalArticleCount = articleDao.selectCount(conn);//글의 개수를 갖고와서 totalArticleCount에 저장한다.
 			
 			if(totalArticleCount == 0) {
 				return new ArticleListModel();
