@@ -33,6 +33,8 @@ public class ReplyArticleService {
 			
 			ArticleDao articleDao = ArticleDao.getInstance();
 			Article parent = articleDao.selectById(conn, replyingRequest.getParentArticleId());
+			int i = (parent.getId());
+			System.out.println("갖고온 아이디(글번호) 값" + i);
 			/* ReplyingRequest는 WritingRequest를 상속받는다.
 			 * ReplyingRequest로 부터 받아온 int값으로 selectById메소드를 실행한다.
 			 * 실행된 결과로 갖고온 article을 parent에 저장한다.*/
@@ -95,7 +97,7 @@ public class ReplyArticleService {
 		String parentSeqNum = parent.getSequenceNumber();//시퀀스넘버는 String형 16글자이다. parent의 시퀀스 번호를 같은 타입의 변수 parentSeqNum에 저장한다.
 		DecimalFormat decimalFormat = new DecimalFormat("0000000000000000");//0으로 채워진 16자리의 숫자 형태
 		long parentSeqLongValue = Long.parseLong(parentSeqNum);//String타입을 Long으로 변환하고 그 값을 parentSeqLongValue에 넣는다.
-		/*시퀀스 번호 확인*/System.out.println("test1_parentSeqNum: "+ parentSeqLongValue);
+		/*시퀀스 번호 확인*///System.out.println("test1_parentSeqNum: "+ parentSeqLongValue);
 		long searchMinLongValue = 0;
 		switch (parent.getLevel()) {
 		case 0://본문글일때, 글의 레벨은 0
@@ -108,7 +110,7 @@ public class ReplyArticleService {
 			searchMinLongValue = parentSeqLongValue / 100L * 100L;
 			break;
 		}
-		System.out.println("test2_searchMinLongValue: " + searchMinLongValue);
+		//System.out.println("test2_searchMinLongValue: " + searchMinLongValue);
 		return decimalFormat.format(searchMinLongValue);
 	}//getSearchMinSeqNum 이거 처리할때 system.out.println 으로 내용 찍어보자.
 	

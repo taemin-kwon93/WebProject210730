@@ -41,4 +41,5 @@ public class WritingRequest {
 		article.setContent(content);
 		return article;
 	}
+	
 }
