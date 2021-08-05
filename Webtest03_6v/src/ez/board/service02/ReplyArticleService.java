@@ -33,8 +33,8 @@ public class ReplyArticleService {
 			
 			ArticleDao articleDao = ArticleDao.getInstance();
 			Article parent = articleDao.selectById(conn, replyingRequest.getParentArticleId());
-			int i = (parent.getId());
-			System.out.println("갖고온 아이디(글번호) 값" + i);
+			//int i = (parent.getId());
+			//System.out.println("갖고온 아이디(글번호) 값" + i);
 			/* ReplyingRequest는 WritingRequest를 상속받는다.
 			 * ReplyingRequest로 부터 받아온 int값으로 selectById메소드를 실행한다.
 			 * 실행된 결과로 갖고온 article을 parent에 저장한다.*/

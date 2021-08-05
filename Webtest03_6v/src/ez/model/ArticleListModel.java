@@ -10,11 +10,12 @@ public class ArticleListModel {
 	private int startRow;
 	private int endRow;
 	
-	public ArticleListModel() {//글이 아무것도 없을때.
+	public ArticleListModel() {//글이 아무것도 없을때, ListArticleService 34행 쯤 에서 사용
 		this(new ArrayList<Article>(), 0, 0, 0, 0);
 	}
 	
 	public ArticleListModel(List<Article> articleList, int requestPageNumber, int totalPageCount, int startRow, int endRow) {
+		//등록된 글이 있을때 매개변수를 담아 사용한다. ListArticleService 49행 쯤 에서 사용
 		this.articleList = articleList;
 		this.requestPage = requestPageNumber;
 		this.totalPageCount = totalPageCount;

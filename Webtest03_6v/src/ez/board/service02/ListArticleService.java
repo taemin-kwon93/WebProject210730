@@ -18,19 +18,19 @@ public class ListArticleService {
 	
 	public static final int COUNT_PER_PAGE=10;
 	
-	//글 목록을 불러오는 메소드
+	//글 목록을 불러오는 메소드/*model패키지, ArticleListModel 타입으로 값을 받는다.*/
 	public ArticleListModel getArticleList(int requestPageNumber) {//int타입 페이지 숫자를 매개변수로 받는다.
-		if(requestPageNumber < 0) {/*model패키지, 
-		ArticleListModel 타입으로 값을 받는다.*/
+		if(requestPageNumber < 0) {//페이지 수가 0보다 작으면 예외처리를 한다.
 			throw new IllegalArgumentException("page number < 0: " + requestPageNumber);//페이지 넘버가 0보다 작을때의 예외처리
 		}
 		ArticleDao articleDao = ArticleDao.getInstance();//articleDao 
 		Connection conn = null;
 		try {
 			conn = ConnectionProvider.getConnection();
-			int totalArticleCount = articleDao.selectCount(conn);//글의 개수를 갖고와서 totalArticleCount에 저장한다.
+			int totalArticleCount = articleDao.selectCount(conn);//글의 개수(select count(*)from article)
+			//를 갖고와서 totalArticleCount에 저장한다.
 			
-			if(totalArticleCount == 0) {
+			if(totalArticleCount == 0) {//등록된 글이 없을때의 경우
 				return new ArticleListModel();
 			}
 			
@@ -61,8 +61,11 @@ public class ListArticleService {
 			return 0;
 		}
 		int pageCount = totalArticleCount/COUNT_PER_PAGE;
+		/*예시, 글의 총 개수가 43개 일때,
+		 * int타입 pageCount변수의 값은 43/(상수)10 이다.
+		 * 따라서 pageCount에 저장될 값은 4이다.(%->나머지 3)*/
 		if(totalArticleCount%COUNT_PER_PAGE > 0) {
-			pageCount++;
+			pageCount++;//나머지 값 3을 위한 페이지추가 연산작업을 한다.
 		}
 		return pageCount;/*한페이지당 게시글 10개를 설정했을때(COUNT_PER_PAGE,
 		불러온 전체 글 수(totalArticleCount)를 10으로 

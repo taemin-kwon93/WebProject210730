@@ -58,16 +58,34 @@ public class ArticleDao {
 			pstmt.setInt(1, endRow);//쿼리문에 담길 내용 1
 			pstmt.setInt(2, firstRow);//쿼리문에 담길 내용 2
 			rs = pstmt.executeQuery();//쿼리문의 결과를 담는다.
-			if (!rs.next()) {
-				return Collections.emptyList();
-			}
-			List<Article> articleList = new ArrayList<Article>();
+			if (!rs.next()) {//쿼리문의 결과가 없을 시에는 해당하는 데이터가 없는 것이다.
+				return Collections.emptyList();//따라서, 비어있는 List를 리턴한다.
+			}//int z = 1;
+			List<Article> articleList = new ArrayList<Article>();//Article객체 타입의 List변수 articleList를 선언한다.
 			do {
-				Article article = makeArticleFromResultSet(rs, false);
+				Article article = makeArticleFromResultSet(rs, false);/*쿼리문 결과로 나온 데이터들을 makeArticleFromResultSet 메소드를 
+				활용하여 Article타입 변수 article에 담는다. */
 				articleList.add(article);//반복해서 article들을 articleList에 담는다.
+				//System.out.println("글담기 테스트: " + z++);
 				//System.out.println(article);
 			} while (rs.next());
+			//System.out.println("결과: " + articleList);
+			//System.out.println("글담기 테스트 2 : " + z);
 			return articleList;
+			/*  글담기 테스트: 1
+				글담기 테스트: 2
+				글담기 테스트: 3
+				글담기 테스트: 4
+				글담기 테스트: 5
+				글담기 테스트: 6
+				글담기 테스트: 7
+				글담기 테스트: 8
+				글담기 테스트: 9
+				글담기 테스트: 10
+				결과: [ez.model.Article@700c0a90, ez.model.Article@803bf85, ez.model.Article@59f89575,
+				 	 ez.model.Article@423e98e, ez.model.Article@146b2b10, ez.model.Article@181518f, 
+				 	 ez.model.Article@1c4f2ff7, ez.model.Article@7bbda69, ez.model.Article@4a455225, ez.model.Article@41c37fcb]
+				글담기 테스트 2 : 11*/
 		} finally {
 			JdbcUtil.close(rs);
 			JdbcUtil.close(pstmt);
@@ -108,8 +126,10 @@ public class ArticleDao {
 			pstmt.setString(5, article.getPassword());
 			pstmt.setString(6, article.getTitle());
 			pstmt.setString(7, article.getContent());
-			int insertedCount = pstmt.executeUpdate();//입력이 되면 1이 리턴된다.(등록된 글 수)
-
+			int insertedCount = pstmt.executeUpdate();//입력이 되면 1이 리턴된다. executeUpdate()는 리턴값이 int타입이다.
+			//(1) DML(SQL Data Manipulation Language) 문의 행 개수 또는 (2) 아무것도 반환하지 않는 SQL 문의 경우 0
+			//System.out.println("등록된 글 수: " + insertedCount);
+			
 			if (insertedCount > 0) {//pstmt.executeUpdate()가 실행되어 1이 입력이 되면,
 				stmt = conn.createStatement();//아래에 쿼리문을 실행한다.
 				rs = stmt.executeQuery("select article_id_seq.CURRVAL from dual");//방금 입력한 글의 시퀀스 값을 가지고 와라.
@@ -142,6 +162,7 @@ public class ArticleDao {
 			Article article = makeArticleFromResultSet(rs, true);//글이 있을 경우,
 			//article.setId(rs.getInt("article_id")); 이런식으로 article에 글을 담아옴.
 			//private Article makeArticleFromResultSet(ResultSet rs, boolean readContent), return article;
+			//System.out.println(article);, 매번 다른 주소값이 출력됨
 			return article;
 		} finally {
 			JdbcUtil.close(rs);

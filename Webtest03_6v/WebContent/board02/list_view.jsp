@@ -38,7 +38,7 @@ html문서에서 소스보기를 할때
 </tr>
 </c:when>
 <c:otherwise>
-<c:forEach var="article" items="${listModel.articleList}">
+<c:forEach var="article" items="${listModel.articleList}"><%-- 해당 페이지에 articleList를 뽑는 반복문의 시작점 --%>
 <tr>
 <td>${article.id}</td>
 <td>
@@ -52,13 +52,13 @@ query라는 변수를 선언하고 'articleId=${article.id}&p=${listModel.requestPage}'라
 <td>${article.postingDate}</td>
 <td>${article.readCount}</td>
 </tr>
-</c:forEach>
+</c:forEach><%-- 해당 페이지에 articleList를 뽑는 반복문의 끝 지점 --%>
 <tr>
 	<td colspan="5">
 	<c:if test="${beginPage > 10}">
 		<a href="<c:url value="list.jsp?=p=${beginPage-1}"/>">이전</a>
 	</c:if>
-	<c:forEach var="pno" begin="${beginPage}" end="${endPage}">
+	<c:forEach var="pno" begin="${beginPage}" end="${endPage}"><!-- 반복문을 통해 페이지를 출력-->
 	<a href="<c:url value="list.jsp?p=${pno}"/>">[${pno}]</a>
 	</c:forEach>
 	<c:if test="${endPage < listModel.totalPageCount}">

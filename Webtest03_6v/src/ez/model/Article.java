@@ -73,16 +73,16 @@ public class Article {
 		if(sequenceNumber==null) {
 			return -1;
 		}
-		if(sequenceNumber.length() != 16) {
-			return -1;
+		if(sequenceNumber.length() != 16) {//시퀀스번호=그룹번호+레벨번호, 16자리의 숫자가 된다. 
+			return -1;//16자리가 아니면 -1을 리턴한다.
 		}
-		if(sequenceNumber.endsWith("999999")) {
+		if(sequenceNumber.endsWith("999999")) {//999999
 			return 0;
 		}
-		if(sequenceNumber.endsWith("9999")) {
+		if(sequenceNumber.endsWith("9999")) {//989999
 			return 1;
 		}
-		if(sequenceNumber.endsWith("99")) {
+		if(sequenceNumber.endsWith("99")) {//989899
 			return 2;
 		}
 			return 3;					

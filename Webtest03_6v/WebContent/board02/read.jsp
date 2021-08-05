@@ -14,6 +14,7 @@
 	}catch(ArticleNotFoundException ex){//ArticleNotFound 예외가 발생했을때의 처리
 		viewPage = "article_not_found.jsp";//예외가 발생했을 때, viewPage의 값은 'article_not_found.jsp'이다.
 	}
+
 	//System.out.println("viewPage: " + viewPage);
 %>
 <jsp:forward page="<%=viewPage%>"/>
