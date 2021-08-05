@@ -104,7 +104,7 @@ public class ArticleDao {
 		article.setWriterName(rs.getString("writer_name"));
 		article.setPassword(rs.getString("password"));
 		article.setTitle(rs.getString("title"));
-		if (readContent) {
+		if (readContent) {//글 수정의 경우 readContent에서 true값을 받는다.
 			article.setContent(rs.getString("content"));
 		}
 		return article;
