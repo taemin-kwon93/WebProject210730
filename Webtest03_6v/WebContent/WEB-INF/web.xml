@@ -61,7 +61,7 @@
   	<load-on-startup>1</load-on-startup>
   </servlet>
   
- <!-- <servlet>
+  <servlet>
 	<servlet-name>MessageDaoProviderInit</servlet-name>
 	<servlet-class>ez.dao.MessageDaoProviderInit</servlet-class>
 	<init-param>
@@ -69,6 +69,6 @@
 		<param-value>oracle</param-value>
 	</init-param>
 	<load-on-startup>1</load-on-startup>
-  </servlet>-->
+  </servlet>
   
 </web-app>

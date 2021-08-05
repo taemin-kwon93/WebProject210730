@@ -20,11 +20,14 @@ public class WriteArticleService {
 	
 	public Article write(WritingRequest writingRequest)throws IdGenerationFailedException{
 		//글 입력을 위한 셋팅
-		int groupId = IdGenerator.getInstance().generateNextId("article");/*DB에서 sequence_name컬럼 'article'의 값 예.27
+		int groupId = IdGenerator.getInstance().generateNextId("article");/*ID_SEQUENCE테이블 자료
+		select next_value from id_sequence where sequence_name = ? for update;
+		DB에서 sequence_name컬럼 'article'의 값 예.27
 		따라서 IdGenerator를 통해 그룹번호를 가지고온 다음 int타입 groupId에 저장한다.*/
 		Article article = writingRequest.toArticle();/*toArticle()에는 작성자, 비밀번호, 제목, 내용의 데이터가 담겨져있다.*/
-		
+		//System.out.println("Service"+article.getContent());
 		article.setGroupId(groupId);//그룹번호를 지정해준다.
+		System.out.println(groupId);
 		article.setPostingDate(new Date());//포스팅 날짜를 정해준다.
 		DecimalFormat decimalFormat = new DecimalFormat("0000000000");//DecimalFormat의 형태를 0으로 10자리 주고
 		article.setSequenceNumber(decimalFormat.format(groupId)+"999999");/* 그룹번호로 저장한 groupId의 값을 "0000000000"형식으로 맞추어
@@ -42,7 +45,8 @@ public class WriteArticleService {
 			conn.commit();//글 삽입이 되면 커밋!
 			
 			article.setId(articleId);
-			//System.out.print("글내용 출력하기: " + article.getContent());  
+			//System.out.println("WriteArticleService commit 이후: " + article.getContent());  
+			//System.out.println("postedArticle.id: " + article.getId());
 			return article;
 		}catch(SQLException e) {
 			JdbcUtil.rollback(conn);

@@ -4,13 +4,12 @@
 <%@ page import="ez.model.Article" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <% request.setCharacterEncoding("euc-kr"); %>
-<jsp:useBean id="writingRequest" 
-	class="ez.model.WritingRequest">
+<jsp:useBean id="writingRequest" class="ez.model.WritingRequest">
 <jsp:setProperty name="writingRequest" property="*"/>
-</jsp:useBean>
+</jsp:useBean><%-- writeForm에서 받아온 내용들을 WritingRequest.java빈을 활용하여 담는다. --%>
 <%
 	Article postedArticle = 
-		WriteArticleService.getInstance().write(writingRequest);
+			WriteArticleService.getInstance().write(writingRequest);
 	request.setAttribute("postedArticle", postedArticle);
 %>
 <html>

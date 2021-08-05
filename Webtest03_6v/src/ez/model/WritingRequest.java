@@ -39,6 +39,8 @@ public class WritingRequest {
 		article.setPassword(password);
 		article.setTitle(title);
 		article.setContent(content);
+		//System.out.println("WritingRequest: " + content); 
+		//글 입력시 writingRequest 접근
 		return article;
 	}
 	

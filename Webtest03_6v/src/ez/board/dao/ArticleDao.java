@@ -104,7 +104,7 @@ public class ArticleDao {
 		article.setWriterName(rs.getString("writer_name"));
 		article.setPassword(rs.getString("password"));
 		article.setTitle(rs.getString("title"));
-		if (readContent) {//글 수정의 경우 readContent에서 true값을 받는다.
+		if (readContent) {
 			article.setContent(rs.getString("content"));
 		}
 		return article;
@@ -129,7 +129,7 @@ public class ArticleDao {
 			int insertedCount = pstmt.executeUpdate();//입력이 되면 1이 리턴된다. executeUpdate()는 리턴값이 int타입이다.
 			//(1) DML(SQL Data Manipulation Language) 문의 행 개수 또는 (2) 아무것도 반환하지 않는 SQL 문의 경우 0
 			//System.out.println("등록된 글 수: " + insertedCount);
-			
+			//System.out.println("ArticleDao: " + article.getContent());
 			if (insertedCount > 0) {//pstmt.executeUpdate()가 실행되어 1이 입력이 되면,
 				stmt = conn.createStatement();//아래에 쿼리문을 실행한다.
 				rs = stmt.executeQuery("select article_id_seq.CURRVAL from dual");//방금 입력한 글의 시퀀스 값을 가지고 와라.
