@@ -27,7 +27,7 @@ public class WriteArticleService {
 		Article article = writingRequest.toArticle();/*toArticle()에는 작성자, 비밀번호, 제목, 내용의 데이터가 담겨져있다.*/
 		//System.out.println("Service"+article.getContent());
 		article.setGroupId(groupId);//그룹번호를 지정해준다.
-		System.out.println(groupId);
+		//System.out.println(groupId);
 		article.setPostingDate(new Date());//포스팅 날짜를 정해준다.
 		DecimalFormat decimalFormat = new DecimalFormat("0000000000");//DecimalFormat의 형태를 0으로 10자리 주고
 		article.setSequenceNumber(decimalFormat.format(groupId)+"999999");/* 그룹번호로 저장한 groupId의 값을 "0000000000"형식으로 맞추어

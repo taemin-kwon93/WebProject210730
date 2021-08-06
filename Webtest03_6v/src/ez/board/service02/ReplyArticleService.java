@@ -52,7 +52,7 @@ public class ReplyArticleService {
 				}
 			}
 			String searchMaxSeqNum = parent.getSequenceNumber();//0000000026999999 아런식으로 시퀀스 넘버 가지고옴
-			String searchMinSeqNum = getSearchMinSeqNum(parent);
+			String searchMinSeqNum = getSearchMinSeqNum(parent);//레벨 조건(parent.getLevel())에 따라 시퀀스번호를 포맷해온다.
 			
 			String lastChildSeq = articleDao.selectLastSequenceNumber(conn, searchMaxSeqNum, searchMinSeqNum);
 			String sequenceNumber = getSequenceNumber(parent, lastChildSeq);
@@ -94,7 +94,7 @@ public class ReplyArticleService {
 		}
 	}//private void checkParent(Article parent, int parentId)
 	
-	private String getSearchMinSeqNum(Article parent){
+	private String getSearchMinSeqNum(Article parent){//매개변수로 받아온 부모글을 포맷하는 메소드
 		String parentSeqNum = parent.getSequenceNumber();//시퀀스넘버는 String형 16글자이다. parent의 시퀀스 번호를 같은 타입의 변수 parentSeqNum에 저장한다.
 		DecimalFormat decimalFormat = new DecimalFormat("0000000000000000");//0으로 채워진 16자리의 숫자 형태
 		long parentSeqLongValue = Long.parseLong(parentSeqNum);//String타입을 Long으로 변환하고 그 값을 parentSeqLongValue에 넣는다.
@@ -113,7 +113,25 @@ public class ReplyArticleService {
 		}
 		//System.out.println("test2_searchMinLongValue: " + searchMinLongValue);
 		return decimalFormat.format(searchMinLongValue);
-	}//getSearchMinSeqNum 이거 처리할때 system.out.println 으로 내용 찍어보자.
+	}//getSearchMinSeqNum 처리할때 system.out.println 으로 내용 찍어보자.
+	
+	/*getSearchMinSeqNum 메소드 처리 방식 테스트 내용
+	long parentSeqLongValue =50999999L;
+	long searchMinLongValue;
+	long x = parentSeqLongValue/1000000L;
+	long y = x*1000000L;
+	System.out.println("1: " + x);
+	System.out.println("2: " + y);
+	searchMinLongValue = parentSeqLongValue/1000000L * 1000000L;
+	System.out.println("3: " + searchMinLongValue);
+	
+	DecimalFormat decimalFormat = new DecimalFormat("0000000000000000");
+	System.out.println(decimalFormat.format(searchMinLongValue));
+	[출력결과]
+	1: x=50
+	2: y=50000000
+	3: 50000000
+	0000000050000000	*/
 	
 	private String getSequenceNumber(Article parent, String lastChildSeq)throws LastChildAleadyExistsException{
 		long parentSeqLong = Long.parseLong(parent.getSequenceNumber());
