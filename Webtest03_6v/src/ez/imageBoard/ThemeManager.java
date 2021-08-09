@@ -293,16 +293,17 @@ public class ThemeManager {
     			do {
     				Theme theme = new Theme();
     				theme.setId(rsMessage.getInt("THEME_MESSAGE_ID"));
-    				theme.setGroupId(rsMessage.getInt("THEME_MESSAGE_ID"));
-    				theme.setOrderNo(rsMessage.getInt("THEME_MESSAGE_ID"));
-    				theme.setLevels(rsMessage.getInt("THEME_MESSAGE_ID"));
-    				theme.setParentId(rsMessage.getInt("THEME_MESSAGE_ID"));
-    				theme.setRegister(rsMessage.getInt("THEME_MESSAGE_ID"));
-    				theme.setName(rsMessage.getInt("THEME_MESSAGE_ID"));
-    				theme.setEmail(rsMessage.getInt("THEME_MESSAGE_ID"));
-    				theme.setImage(rsMessage.getInt("THEME_MESSAGE_ID"));
-    				theme.setPassword(rsMessage.getInt("THEME_MESSAGE_ID"));
-    				theme.setTitle(rsMessage.getInt("THEME_MESSAGE_ID"));
+    				theme.setGroupId(rsMessage.getInt("GROUP_ID"));
+    				theme.setOrderNo(rsMessage.getInt("ORDER_NO"));
+    				theme.setLevels(rsMessage.getInt("LEVELS"));
+    				theme.setParentId(rsMessage.getInt("PARENT_ID"));
+    				theme.setRegister(rsMessage.getTimestamp("REGISTER"));
+    				theme.setName(rsMessage.getString("NAME"));
+    				theme.setEmail(rsMessage.getString("EMAIL"));
+    				theme.setImage(rsMessage.getString("IMAGE"));
+    				theme.setPassword(rsMessage.getString("PASSWORD"));
+    				theme.setTitle(rsMessage.getString("TITLE"));
+    				list.add(theme);
     			}while(rsMessage.next());
     			
     			return list;
@@ -317,5 +318,121 @@ public class ThemeManager {
     		JdbcUtil.close(pstmtMessage);
     		JdbcUtil.close(conn);
     	}
-    }
+    }//public List selectList(List whereCond, Map valueMap, int startRow, int endRow)
+    
+    public Theme select(int id) throws Exception{
+    	Connection conn = null;
+    	PreparedStatement pstmtMessage = null;
+    	ResultSet rsMessage = null;
+    	PreparedStatement pstmtContent = null;
+    	ResultSet rsContent = null;
+    	
+		try {
+			Theme theme = null;
+
+			conn = ConnectionProvider.getConnection();
+			pstmtMessage = conn.prepareStatement("select * from THEME_MESSAGE where THEME_MESSAGE_ID = ?");
+			pstmtMessage.setInt(1, id);
+			rsMessage = pstmtMessage.executeQuery();
+			if (rsMessage.next()) {
+				theme = new Theme();
+				theme.setId(rsMessage.getInt("THEME_MESSAGE_ID"));
+				theme.setGroupId(rsMessage.getInt("GROUP_ID"));
+				theme.setOrderNo(rsMessage.getInt("ORDER_NO"));
+				theme.setLevels(rsMessage.getInt("LEVELS"));
+				theme.setParentId(rsMessage.getInt("PARENT_ID"));
+				theme.setRegister(rsMessage.getTimestamp("REGISTER"));
+				theme.setName(rsMessage.getString("NAME"));
+				theme.setEmail(rsMessage.getString("EMAIL"));
+				theme.setImage(rsMessage.getString("IMAGE"));
+				theme.setPassword(rsMessage.getString("PASSWORD"));
+				theme.setTitle(rsMessage.getString("TITLE"));
+
+				pstmtContent = conn
+						.prepareStatement("select CONTENT from THEME_CONTENT " + "where THEME_MESSAGE_ID = ?");
+				pstmtContent.setInt(1, id);
+				rsContent = pstmtContent.executeQuery();
+				if (rsContent.next()) {
+					Reader reader = null;
+					try {
+						reader = rsContent.getCharacterStream("CONTENT");// 읽어 들일때는 getCharacterStream을 사용
+						char[] buff = new char[512];
+						int len = -1;
+						StringBuffer buffer = new StringBuffer(512);
+						while ((len = reader.read(buff)) != -1) {
+							buffer.append(buff, 0, len);
+						}
+						theme.setContent(buffer.toString());
+					} catch (IOException iex) {
+						throw new Exception("select", iex);
+					} finally {
+						if (reader != null)
+							try {
+								reader.close();
+							} catch (IOException iex) {
+							}
+					}
+				} else {
+					return null;
+				}
+				return theme;
+			} else {
+				return null;
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			throw new Exception("select", ex);
+		} finally {
+			JdbcUtil.close(rsMessage);
+			JdbcUtil.close(pstmtMessage);
+			JdbcUtil.close(rsContent);
+			JdbcUtil.close(pstmtContent);
+			JdbcUtil.close(conn);
+		}
+	}//public Theme select(int id)
+    
+	public void delete(int id) throws Exception {
+		Connection conn = null;
+		PreparedStatement pstmtMessage = null;
+		PreparedStatement pstmtContent = null;
+
+		try {
+			conn = ConnectionProvider.getConnection();
+			conn.setAutoCommit(false);
+
+			pstmtMessage = conn.prepareStatement("delete from THEME_MESSAGE where THEME_MESSAGE_ID = ?");
+			pstmtContent = conn.prepareStatement("delete from THEME_CONTENT where THEME_MESSAGE_ID = ?");
+
+			pstmtMessage.setInt(1, id);
+			pstmtContent.setInt(1, id);
+
+			int updatedCount1 = pstmtMessage.executeUpdate();
+			int updatedCount2 = pstmtContent.executeUpdate();
+
+			if (updatedCount1 + updatedCount2 == 2) {
+				conn.commit();
+			} else {
+				conn.rollback();
+				throw new Exception("invalid id:" + id);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException ex1) {
+			}
+			throw new Exception("delete", ex);
+		} finally { 
+			JdbcUtil.close(pstmtMessage);
+			JdbcUtil.close(pstmtContent);
+			if (conn != null)
+				try {
+					conn.setAutoCommit(true);
+					conn.close();
+				} catch (SQLException ex) {
+				}
+		}
+
+	}
+
 }
