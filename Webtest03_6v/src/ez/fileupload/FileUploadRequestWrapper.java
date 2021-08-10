@@ -51,7 +51,7 @@ public class FileUploadRequestWrapper extends HttpServletRequestWrapper{
 				String name = fileItem.getFieldName();
 				
 				if(fileItem.isFormField()) {
-					String value = fileItem.getString("EUC-KLR");
+					String value = fileItem.getString("EUC-KR");
 					String[] values = (String[])parameterMap.get(name);
 					if(values == null) {
 						values = new String[] {value};
