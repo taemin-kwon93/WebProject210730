@@ -95,7 +95,7 @@
     <%
         Theme theme = (Theme)pageContext.getAttribute("theme");
     %>
-    <img src="/EZEN/image/${theme.image}.small.jpg" width="50">
+    <img src="/Webtest03_6v/image/${theme.image}.small.jpg" width="50">
     </c:if></td>
     <td><a href="javascript:goView(${theme.id})">${theme.title}</a></td>
     <td>${theme.name}</td>
