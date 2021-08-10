@@ -1,4 +1,4 @@
-<%@ page contentType = "text/html; charset=euc-kr" %>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import = "ez.imageBoard.Theme" %>
 <%@ page import = "ez.imageBoard.ThemeManager" %>

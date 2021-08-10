@@ -10,6 +10,7 @@ import org.apache.commons.fileupload.FileUploadException;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.Iterator;
 
@@ -20,16 +21,16 @@ public class FileUploadRequestWrapper extends HttpServletRequestWrapper{
 	private HashMap parameterMap;
 	private HashMap fileItemMap;
 	
-	public FileUploadRequestWrapper(HttpServletRequest request) throws FileUploadException{
+	public FileUploadRequestWrapper(HttpServletRequest request) throws FileUploadException, UnsupportedEncodingException{
 		this(request, -1, -1, null);
 	}
 	
-	public FileUploadRequestWrapper(HttpServletRequest request, int threshold, int max, String repositoryPath) throws FileUploadException{
+	public FileUploadRequestWrapper(HttpServletRequest request, int threshold, int max, String repositoryPath) throws FileUploadException, UnsupportedEncodingException{
 		super(request);
 		parsing(request, threshold, max, repositoryPath);
 	}
 
-	private void parsing(HttpServletRequest request, int threshold, int max, String repositoryPath)throws FileUploadException {
+	private void parsing(HttpServletRequest request, int threshold, int max, String repositoryPath)throws FileUploadException, UnsupportedEncodingException {
 		if(FileUpload.isMultipartContent(request)) {
 			multipart = true;
 			
@@ -50,7 +51,7 @@ public class FileUploadRequestWrapper extends HttpServletRequestWrapper{
 				String name = fileItem.getFieldName();
 				
 				if(fileItem.isFormField()) {
-					String value = fileItem.getString();
+					String value = fileItem.getString("EUC-KLR");
 					String[] values = (String[])parameterMap.get(name);
 					if(values == null) {
 						values = new String[] {value};

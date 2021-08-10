@@ -305,7 +305,7 @@ public class ThemeManager {
     				theme.setTitle(rsMessage.getString("TITLE"));
     				list.add(theme);
     			}while(rsMessage.next());
-    			
+    			//System.out.println("문제발생1: " + list);
     			return list;
     		}else {
     			return Collections.EMPTY_LIST;

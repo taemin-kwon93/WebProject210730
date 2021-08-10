@@ -1,5 +1,5 @@
-<%@ page contentType = "text/html; charset=euc-kr" %>
-<%@ page errorPage = "./error/error_view.jsp" %>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" %>
+<%@ page errorPage = "../error/error_view.jsp" %>
 
 <%@ page import = "java.sql.Timestamp" %>
 <%@ page import = "java.io.File" %>
@@ -15,7 +15,7 @@
 <%
     FileUploadRequestWrapper requestWrap = new FileUploadRequestWrapper(
         request, -1, -1,
-        "C:/Users/DELL/git/WebProject210730/Webtest03_6v/WebContent/image");
+        "C:/Users/DELL/git/WebProject210730/Webtest03_6v/WebContent/temp");
 		//C:\Users\DELL\git\WebProject210730\Webtest03_6v\WebContent\temp
 		//C:\Users\DELL\git\WebProject210730\Webtest03_6v\WebContent\image
     HttpServletRequest tempRequest = request;
