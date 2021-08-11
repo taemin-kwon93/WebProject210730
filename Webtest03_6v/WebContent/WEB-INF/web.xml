@@ -21,7 +21,8 @@
   	<param-value>5</param-value>
   </context-param>
   
- <!-- <jsp-config>
+ <!--21.07.08 자동 Include실행 예제 연습
+  <jsp-config>
   	<jsp-property-group>
   	 <url-pattern>/july08/view/*</url-pattern>
   	 <include-prelude>/july08/common/variable.jspf</include-prelude>
@@ -42,6 +43,7 @@
 	</jsp-config>
  <!-- Expression Language 수업 내용중 추가 21.07.27 -->
  
+ <!-- JdbcDriverLoader에 오라클 드라이버를 입력 -->
   <servlet>
   	<servlet-name>JDBCDriverLoader</servlet-name>
   	<servlet-class>ez.loader.Loader</servlet-class>
