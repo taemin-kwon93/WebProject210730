@@ -333,6 +333,7 @@ public class ThemeManager {
 			conn = ConnectionProvider.getConnection();
 			pstmtMessage = conn.prepareStatement("select * from THEME_MESSAGE where THEME_MESSAGE_ID = ?");
 			pstmtMessage.setInt(1, id);
+			System.out.println("아이디 값 확인 1: "+id);
 			rsMessage = pstmtMessage.executeQuery();
 			if (rsMessage.next()) {
 				theme = new Theme();
@@ -363,6 +364,7 @@ public class ThemeManager {
 							buffer.append(buff, 0, len);
 						}
 						theme.setContent(buffer.toString());
+						System.out.println("id번호 확인값 2: " + id);
 					} catch (IOException iex) {
 						throw new Exception("select", iex);
 					} finally {

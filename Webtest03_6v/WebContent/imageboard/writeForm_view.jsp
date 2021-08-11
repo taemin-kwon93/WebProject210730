@@ -5,6 +5,7 @@
 <%@ page import = "ez.imageBoard.ThemeManagerException" %>
 <%
     String parentId = request.getParameter("parentId");
+	//parentId의 정체?
     String title = "";
     Theme theme = null;
     if (parentId != null) {
@@ -33,16 +34,20 @@ function validate(form) {
     }
 }
 </script>
-
+<%-- 레벨값 그룹값 부모아이디값 --%>
 <form action="write.jsp" method="post" enctype="multipart/form-data"
       onSubmit="return validate(this)">
+      
 <input type="hidden" name="levels" value="${theme.levels + 1}">
+
 <c:if test="${! empty param.groupId}">
 <input type="hidden" name="groupId" value="${param.groupId}">
 </c:if>
+
 <c:if test="${! empty param.parentId}">
 <input type="hidden" name="parentId" value="${param.parentId}">
 </c:if>
+
 <table width="100%" border="1" cellpadding="1" cellspacing="0">
 <tr>
     <td>제목</td>
