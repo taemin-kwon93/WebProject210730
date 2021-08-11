@@ -15,19 +15,21 @@ import java.util.Enumeration;
 import java.util.Iterator;
 
 public class FileUploadRequestWrapper extends HttpServletRequestWrapper{
-	
+	//FileUploadRequestWrapper는 HttpServletRequestWrapper를 상속받는다.
 	private boolean multipart = false;
 	
 	private HashMap parameterMap;
 	private HashMap fileItemMap;
 	
+	//첫번째 FileUploadRequestWrapper
 	public FileUploadRequestWrapper(HttpServletRequest request) throws FileUploadException, UnsupportedEncodingException{
 		this(request, -1, -1, null);
 	}
 	
+	//두번째 FileUploadRequestWrapper
 	public FileUploadRequestWrapper(HttpServletRequest request, int threshold, int max, String repositoryPath) throws FileUploadException, UnsupportedEncodingException{
 		super(request);
-		parsing(request, threshold, max, repositoryPath);
+		parsing(request, threshold, max, repositoryPath);//threshold : 한계점
 	}
 
 	private void parsing(HttpServletRequest request, int threshold, int max, String repositoryPath)throws FileUploadException, UnsupportedEncodingException {
@@ -137,6 +139,7 @@ public class FileUploadRequestWrapper extends HttpServletRequestWrapper{
 	}
 
 	public void addTo() {
+		System.out.println(FileUploadRequestWrapper.class.getName());
 		super.setAttribute(FileUploadRequestWrapper.class.getName(), this);
 	}
 
