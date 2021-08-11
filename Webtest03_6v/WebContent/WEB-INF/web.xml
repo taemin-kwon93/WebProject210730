@@ -29,7 +29,7 @@
   	</jsp-property-group>
   </jsp-config> -->
   
- <!-- Expression Language 21.07.27 -->
+ <!-- Expression Language 수업 내용중 추가 21.07.27 -->
 	<jsp-config>
 		<taglib>
 			<taglib-uri>
@@ -40,7 +40,8 @@
 	        </taglib-location>
 		</taglib>
 	</jsp-config>
-
+ <!-- Expression Language 수업 내용중 추가 21.07.27 -->
+ 
   <servlet>
   	<servlet-name>JDBCDriverLoader</servlet-name>
   	<servlet-class>ez.loader.Loader</servlet-class>
@@ -71,6 +72,7 @@
 	<load-on-startup>1</load-on-startup>
   </servlet>
   
+<!--21.08.11 tiles 수업내용중 추가 -->
 	<servlet>
 		<servlet-name>tiles</servlet-name>
 		<servlet-class>org.apache.tiles.web.startup.TilesServlet</servlet-class>
@@ -97,6 +99,6 @@
 		<servlet-name>TilesDispatchServlet</servlet-name>
 		<url-pattern>*.tiles</url-pattern>
 	</servlet-mapping>
-
+<!--21.08.11 tiles 수업내용중 추가 -->
 
 </web-app>

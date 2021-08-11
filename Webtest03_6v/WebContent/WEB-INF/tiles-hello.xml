@@ -5,7 +5,21 @@
 
 <tiles-definitions>
 <!-- tiles는 <tiles-definitions>로 시작해서 </tiles-definitions>로 끝난다 -->
-
+<!-- 
+	<definition name="list" template="/imageboard/template/template2.jsp">
+      <put-attribute name="title" value="이미지 게시판" />
+      <put-attribute name="header" value="/imageboard/module/top.jsp" />
+      <put-attribute name="body" value="/imageboard/list_view.jsp" />      
+      <put-attribute name="footer" value="/imageboard/module/bottom.jsp" />
+   </definition>
+   
+   <definition name="writeForm" template="/imageboard/template/template2.jsp">
+      <put-attribute name="title" value="이미지 게시판" />
+      <put-attribute name="header" value="/imageboard/module/top.jsp" />
+      <put-attribute name="body" value="/imageboard/writeForm_view.jsp" />      
+      <put-attribute name="footer" value="/imageboard/module/bottom.jsp" />
+   </definition>
+   -->
 	<!-- 페이지의 Layout을 정해준다.
 		기존 jsp에서 작업했던 작업들을 이와 같은 xml을 추가해줌으로써 편리하게 작업할 수 있다. -->
 	<definition name="hello" template="/tiles/template/layout.jsp">
