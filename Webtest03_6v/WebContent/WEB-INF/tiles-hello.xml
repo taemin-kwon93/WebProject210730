@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="euc-kr" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+<!-- tiles는 <tiles-definitions>로 시작해서 </tiles-definitions>로 끝난다 -->
+
+	<!-- 페이지의 Layout을 정해준다.
+		기존 jsp에서 작업했던 작업들을 이와 같은 xml을 추가해줌으로써 편리하게 작업할 수 있다. -->
+	<definition name="hello" template="/tiles/template/layout.jsp">
+		<put-attribute name="title" value="헬로우 월드" />
+		<put-attribute name="header" value="/tiles/template/header.jsp" />
+		<put-attribute name="menu" value="/tiles/template/menu.jsp" />
+		<put-attribute name="body" value="/tiles/hello_body.jsp" />
+		<put-attribute name="footer" value="/tiles/template/footer.jsp" />
+	</definition>
+	
+	<definition name="hello2" template="/tiles/template/layout.jsp">
+		<put-attribute name="title" value="헬로우 월드2" />
+		<put-attribute name="header" value="/tiles/template/header2.jsp" />
+		<put-attribute name="menu" value="/tiles/template/menu.jsp" />
+		<put-attribute name="body" value="/tiles/hello_body.jsp" />
+		<put-attribute name="footer" value="/tiles/template/footer2.jsp" />
+	</definition>	
+
+	<!--
+	<definition name="hello2" extends="hello">
+		<put-attribute name="title" value="헬로우 월드2" />
+		<put-attribute name="header" value="/tiles/template/header2.jsp" />
+		<put-attribute name="footer" value="/tiles/template/footer2.jsp" />
+	</definition>
+	-->
+	
+</tiles-definitions>
