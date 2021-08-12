@@ -54,3 +54,21 @@
 </definition>
 	
 </tiles-definitions>
+
+<!--주석 처리 범위
+
+1. tiles-이름.xml 형식, 이런식으로 사용하면 된다.
+2. 21.08.11 tiles 수업내용중 추가내용이 web.xml에 있다.
+3. Webtest03_6v\WebContent\imageboard\template\template2.jsp 를 통해 사용 예제 확인가능
+<?xml version="1.0" encoding="euc-kr" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+	<definition name="home" template="/tiles/template/layout.jsp" preparer="ez.tiles.MenuViewPreparer">
+	<put-attribute name="title" value="헬로우 월드: 홈" />
+	<put-attribute name="header" value="/tiles/template/header.jsp" />
+	</definition>
+</tiles-definitions>
+주석 처리 범위-->
