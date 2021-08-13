@@ -131,8 +131,8 @@
 	</servlet-mapping>
 	
 	<servlet><!-- Controller 예제 3 -->
-		<servlet-name>ControllerUsingURI2</servlet-name>
-		<servlet-class>ez.controller.ControllerUsingURI</servlet-class>
+		<servlet-name>ControllerUsingURI</servlet-name>
+		<servlet-class>ez.controller.ControllerUsingURI2</servlet-class>
 		<init-param>
 			<param-name>configFile2</param-name>
 			<param-value>
@@ -142,23 +142,9 @@
 	</servlet>
 		
 	<servlet-mapping>
-		<servlet-name>ControllerUsingURI2</servlet-name>
+		<servlet-name>ControllerUsingURI</servlet-name>
 		<url-pattern>*.do</url-pattern>
-	</servlet-mapping>
-		
+	</servlet-mapping>	
  <!-- 21.08.12 MVC 수업내용중 추가-->
- <!-- [web.xml] : 기존거는 삭제/수정(어제 한거)
-<servlet>
-	<servlet-name>ControllerUsingURI</servlet-name>
-	<servlet-class>ezen.controller.ControllerUsingURI2</servlet-class>
-	<init-param>
-		<param-name>configFile2</param-name>
-		<param-value>/WEB-INF/commandHandlerURI.properties</param-value>
-	</init-param>
-  </servlet>
-	
-  <servlet-mapping>
-	<servlet-name>ControllerUsingURI</servlet-name>
-	<url-pattern>*.do</url-pattern>
-  </servlet-mapping> -->
+
 </web-app>
